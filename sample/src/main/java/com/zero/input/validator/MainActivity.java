@@ -1,6 +1,7 @@
 package com.zero.input.validator;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
@@ -53,11 +54,13 @@ public class MainActivity extends Activity {
         etMobile = findViewById(R.id.et_mobile);
         etTel = findViewById(R.id.et_tel);
         btn = findViewById(R.id.validate);
-        final MainActivity_InputValidator in = new MainActivity_InputValidator(MainActivity.this);
+
+        InputValidator.initInput(this);
+
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                in.validate();
+                InputValidator.validate();
             }
         });
     }
@@ -65,6 +68,13 @@ public class MainActivity extends Activity {
     @OnValid
     void validate() {
         Toast.makeText(this, "success", Toast.LENGTH_SHORT).show();
+        startActivity(new Intent(this, SecondActivity.class));
+        finish();
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        InputValidator.recycle();
+    }
 }

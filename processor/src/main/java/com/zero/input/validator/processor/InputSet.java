@@ -84,7 +84,22 @@ public class InputSet {
 
         result.addMethod(createValidateMethod());
 
+        result.addMethod(createRecycleMethod());
+
         return result.build();
+    }
+
+    private MethodSpec createRecycleMethod() {
+        MethodSpec.Builder builder = MethodSpec.methodBuilder("recycle")
+                .addModifiers(PUBLIC)
+                .addAnnotation(UI_THREAD)
+                .returns(VOID);
+        if (nextButtonMethod != null) {
+            builder.addStatement("tvList.clear()");
+            builder.addStatement("tvList=null");
+        }
+        builder.addStatement("target=null");
+        return builder.build();
     }
 
     private MethodSpec createDisableBtnMethod() {
