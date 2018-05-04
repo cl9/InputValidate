@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">InputValidator</string>
+    <string name="not_empty">不能为空</string>
+    <string name="error_pwd">密码不对</string>
+    <string name="error_tel">座机不对</string>
+    <string name="error_id">身份证不对</string>
+    <string name="error_email">邮箱不对</string>
+    <string name="error_date">日期不对</string>
+    <string name="error_mobile">手机不对</string>
+</resources>
