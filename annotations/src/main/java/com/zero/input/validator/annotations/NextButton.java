@@ -15,14 +15,14 @@ import java.lang.annotation.Target;
 public @interface NextButton {
 
     @ColorRes
-    int enableBgColor();
+    int enableBgColor() default -1;
 
     @ColorRes
-    int enableTextColor();
+    int enableTextColor() default -1;
 
     @ColorRes
-    int disableBgColor();
+    int disableBgColor() default -1;
 
     @ColorRes
-    int disableTextColor();
+    int disableTextColor() default -1;
 }

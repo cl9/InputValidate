@@ -56,13 +56,6 @@ public class MainActivity extends Activity {
         btn = findViewById(R.id.validate);
 
         InputValidator.initInput(this);
-
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                InputValidator.validate();
-            }
-        });
     }
 
     @OnValid

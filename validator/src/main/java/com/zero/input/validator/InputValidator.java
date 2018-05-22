@@ -16,7 +16,6 @@ import java.util.Map;
 
 public class InputValidator {
     static final Map<Class<? extends Object>, Constructor<? extends Object>> VALIDATORS = new LinkedHashMap<>();
-    static final Map<Class<? extends Object>, Method> METHODS = new LinkedHashMap<>();
     private static final String TAG = "InputValidator";
     private static boolean debug = false;
     private static Object instance;
@@ -71,45 +70,6 @@ public class InputValidator {
         }
         VALIDATORS.put(cls, validatorCtor);
         return validatorCtor;
-    }
-
-    @NonNull
-    @UiThread
-    public static void validate() {
-        if (validatorClass == null) {
-            throw new RuntimeException("please call initInput() before validate()");
-        }
-        if (instance == null) {
-            throw new RuntimeException(validatorClass.getName() + "initial error");
-        }
-
-        Method method = METHODS.get(validatorClass);
-
-        if (method != null) {
-            if (debug) Log.d(TAG, "HIT: Cached in methods map.");
-            try {
-                method.invoke(instance);
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
-            } catch (InvocationTargetException e) {
-                e.printStackTrace();
-            }
-        }
-
-        try {
-            method = validatorClass.getMethod("validate");
-        } catch (NoSuchMethodException e) {
-            throw new RuntimeException("Unable to find validate method for " + validatorClass.getName(), e);
-        }
-
-        METHODS.put(validatorClass, method);
-        try {
-            method.invoke(instance);
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
-            e.printStackTrace();
-        }
     }
 
     @NonNull

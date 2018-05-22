@@ -10,4 +10,10 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/not_empty" />
+
+    <TextView
+        android:id="@+id/btn"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="button"/>
 </LinearLayout>

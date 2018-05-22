@@ -4,7 +4,9 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.EditText;
+import android.widget.TextView;
 
+import com.zero.input.validator.annotations.NextButton;
 import com.zero.input.validator.annotations.NotEmpty;
 
 /**
@@ -14,12 +16,13 @@ import com.zero.input.validator.annotations.NotEmpty;
 public class SecondActivity extends AppCompatActivity {
     @NotEmpty()
     EditText etSex;
+    @NextButton()
+    TextView btn;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_second);
         etSex = findViewById(R.id.et_sex);
-
     }
 }

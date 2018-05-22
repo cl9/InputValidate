@@ -27,16 +27,29 @@ public class NextButtonMethod {
     CodeBlock buttonEnableBlock() {
         CodeBlock.Builder builder = CodeBlock.builder()
                 .add("target.$N.setBackgroundColor($T.getColor(target,$L));\r\t", name, CONTEXT_COMPAT, enableBgColor)
-                .add("target.$N.setTextColor($T.getColor(target,$L));\r\t", name,CONTEXT_COMPAT, enableTextColor)
+                .add("target.$N.setTextColor($T.getColor(target,$L));\r\t", name, CONTEXT_COMPAT, enableTextColor)
                 .add("target.$N.setEnabled(true);", name);
         return builder.build();
     }
 
     CodeBlock buttonDisableBlock() {
         CodeBlock.Builder builder = CodeBlock.builder()
-                .add("target.$N.setBackgroundColor($T.getColor(target,$L));\r\t", name, CONTEXT_COMPAT,disableBgColor)
-                .add("target.$N.setTextColor($T.getColor(target,$L));\r\t", name,CONTEXT_COMPAT, disableTextColor)
+                .add("target.$N.setBackgroundColor($T.getColor(target,$L));\r\t", name, CONTEXT_COMPAT, disableBgColor)
+                .add("target.$N.setTextColor($T.getColor(target,$L));\r\t", name, CONTEXT_COMPAT, disableTextColor)
                 .add("target.$N.setEnabled(false);", name);
         return builder.build();
+    }
+
+    /**
+     * form button has two now.
+     * 1. normal,validate all input is valid
+     * 2. no-normal,button change enable when all input is not empty,
+     * otherwise,button is disable
+     *
+     * @return
+     */
+    boolean isNormal() {
+        return enableBgColor == -1 && enableTextColor == -1
+                && disableBgColor == -1 && disableTextColor == -1;
     }
 }

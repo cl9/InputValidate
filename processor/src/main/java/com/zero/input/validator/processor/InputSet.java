@@ -9,6 +9,8 @@ import com.squareup.javapoet.TypeName;
 import com.squareup.javapoet.TypeSpec;
 import com.zero.input.validator.annotations.ValidatorUtils;
 
+import org.w3c.dom.css.ViewCSS;
+
 import javax.lang.model.element.TypeElement;
 import javax.lang.model.type.TypeMirror;
 
@@ -33,6 +35,10 @@ public class InputSet {
             ClassName.get("android.text", "TextWatcher");
     private static final ClassName EDITABLE =
             ClassName.get("android.text", "Editable");
+    private static final ClassName VIEW =
+            ClassName.get("android.view", "View");
+    private static final ClassName CLICK_LISTENER =
+            ClassName.get("android.view.View", "OnClickListener");
     private final TypeName targetTypeName;
     private final ClassName bindingClassName;
     private final boolean isFinal;
@@ -71,7 +77,7 @@ public class InputSet {
 
         result.addField(targetTypeName, "target", PRIVATE);
 
-        if (nextButtonMethod != null) {
+        if (!nextButtonMethod.isNormal()) {
             createNameListField(result);
             result.addMethod(createIsAllMethod());
             result.addMethod(createWatcherEmptyMethod());
@@ -94,7 +100,7 @@ public class InputSet {
                 .addModifiers(PUBLIC)
                 .addAnnotation(UI_THREAD)
                 .returns(VOID);
-        if (nextButtonMethod != null) {
+        if (!nextButtonMethod.isNormal()) {
             builder.addStatement("tvList.clear()");
             builder.addStatement("tvList=null");
         }
@@ -141,13 +147,13 @@ public class InputSet {
                 .addAnnotation(UI_THREAD);
         builder.beginControlFlow("for($T tv : tvList)", TEXT_VIEW);
 
-        builder.addStatement("tv.addTextChangedListener($L)", createAnonymousClass(builder));
+        builder.addStatement("tv.addTextChangedListener($L)", createTextWatcher(builder));
 
         builder.endControlFlow();
         return builder.build();
     }
 
-    private TypeSpec createAnonymousClass(MethodSpec.Builder builder) {
+    private TypeSpec createTextWatcher(MethodSpec.Builder builder) {
         return TypeSpec.anonymousClassBuilder("")
                 .addSuperinterface(TEXT_WATCHER)
                 .addMethod(MethodSpec.methodBuilder("beforeTextChanged")
@@ -206,11 +212,25 @@ public class InputSet {
                 .addModifiers(PUBLIC)
                 .addParameter(targetTypeName, "target");
         builder.addStatement("this.$N = $N", "target", "target");
-        if (nextButtonMethod != null) {
+        if (!nextButtonMethod.isNormal()) {
             initialTvList(builder);
             builder.addStatement("buttonDisable()");
         }
+        builder.addStatement("$N.$N.setOnClickListener($L)", "target", nextButtonMethod.name, createOnClickListener());
         return builder.build();
+    }
+
+    private TypeSpec createOnClickListener() {
+        return TypeSpec.anonymousClassBuilder("")
+                .addSuperinterface(CLICK_LISTENER)
+                .addMethod(MethodSpec.methodBuilder("onClick")
+                        .addAnnotation(Override.class)
+                        .addModifiers(PUBLIC)
+                        .addParameter(VIEW, "v")
+                        .returns(VOID)
+                        .addStatement("validate()")
+                        .build())
+                .build();
     }
 
     /**
