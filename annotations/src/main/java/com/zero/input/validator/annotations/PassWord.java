@@ -12,9 +12,6 @@ import java.util.Map;
 @Retention(RetentionPolicy.CLASS)
 @Target(ElementType.FIELD)
 public @interface PassWord {
-    int min() default 0;
-
-    int max() default Integer.MAX_VALUE;
 
     String customRegx() default "";
 

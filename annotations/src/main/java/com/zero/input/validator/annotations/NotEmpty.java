@@ -13,9 +13,6 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.CLASS)
 @Target(ElementType.FIELD)
 public @interface NotEmpty {
-    int min() default 0;
-
-    int max() default Integer.MAX_VALUE;
 
     @StringRes
     int errMsg() default -1;
