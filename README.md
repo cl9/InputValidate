@@ -36,3 +36,17 @@ void validate() {
             disableBgColor = R.color.disableBgColor, disableTextColor = R.color.disableTextColor)
 TextView btn;
 ````
+
+#Adding to project
+````
+buildscript {
+    repositories {
+            jcenter()
+            maven {url 'https://dl.bintray.com/woshifantuo3/maven'}
+    }
+}
+
+api 'com.zero:inputvalidator:1.0.3'
+api 'com.zero:inputvalidator-annotations:1.0.3'
+annotationProcessor 'com.zero:inputvalidator-processor:1.0.3'
+````
