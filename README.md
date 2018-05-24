@@ -46,7 +46,7 @@ buildscript {
     }
 }
 
-api 'com.zero:inputvalidator:1.0.3'
-api 'com.zero:inputvalidator-annotations:1.0.3'
-annotationProcessor 'com.zero:inputvalidator-processor:1.0.3'
+api 'com.zero:inputvalidator:1.0.2'
+api 'com.zero:inputvalidator-annotations:1.0.2'
+annotationProcessor 'com.zero:inputvalidator-processor:1.0.2'
 ````
