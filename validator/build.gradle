@@ -1,13 +1,12 @@
 apply plugin: 'com.android.library'
+apply plugin: 'com.novoda.bintray-release'
 
 android {
-    compileSdkVersion 26
-
-
+    compileSdkVersion versions.compileSdk
 
     defaultConfig {
-        minSdkVersion 15
-        targetSdkVersion 26
+        minSdkVersion versions.minSdk
+        targetSdkVersion versions.compileSdk
         versionCode 1
         versionName "1.0"
 
@@ -22,13 +21,22 @@ android {
         }
     }
 
+    packageBuildConfig(false)
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    api project(path: ':annotations')
 
-    implementation 'com.android.support:appcompat-v7:26.1.0'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+}
+
+publish {
+    userOrg = deps.userOrg
+    groupId = deps.groupId
+    artifactId = 'inputvalidator'     //compile引用时的第2部分项目名
+    publishVersion = deps.publishVersion
+    desc = deps.desc
+    website = deps.website
 }

@@ -2,23 +2,28 @@
 
 buildscript {
     ext.versions = [
-            'minSdk': 14,
-            'compileSdk': 27,
+            'minSdk'        : 14,
+            'compileSdk'    : 27,
             'supportLibrary': '27.0.2',
     ]
     ext.deps = [
-            'support': [
+            'support'       : [
                     'compat'     : "com.android.support:support-compat:${versions.supportLibrary}",
                     'annotations': "com.android.support:support-annotations:${versions.supportLibrary}",
                     'test'       : [
                             'runner': 'com.android.support.test:runner:1.0.1',
                     ],
             ],
-            javapoet: 'com.squareup:javapoet:1.10.0',
-            'auto'   : [
+            javapoet        : 'com.squareup:javapoet:1.10.0',
+            'auto'          : [
                     'service': 'com.google.auto.service:auto-service:1.0-rc4',
                     'common' : 'com.google.auto:auto-common:0.10',
-            ]
+            ],
+            'userOrg'       : 'woshifantuo3',   //bintray注册的用户名
+            'groupId'       : 'com.zero',   //compile引用时的第1部分groupId
+            'publishVersion': '1.0.2',   //compile引用时的第3部分版本号
+            'desc'         : 'This is a apt tool for validate input',
+            'website'       : 'https://github.com/cl9/InputValidator',
     ]
 
     repositories {
@@ -27,7 +32,7 @@ buildscript {
     }
     dependencies {
         classpath 'com.android.tools.build:gradle:3.0.1'
-        classpath 'com.github.dcendents:android-maven-gradle-plugin:1.5'
+        classpath 'com.novoda:bintray-release:0.8.1'
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
     }
@@ -37,6 +42,16 @@ allprojects {
     repositories {
         google()
         jcenter()
+    }
+    //解决中文乱码问题
+    tasks.withType(Javadoc) { //兼容中文
+        options.addStringOption('Xdoclint:none','-quiet')
+        options.addStringOption('encoding','UTF-8')
+        options{
+            encoding "UTF-8"
+            charSet 'UTF-8'
+            links "http://docs.oracle.com/javase/7/docs/api"
+        }
     }
 }
 

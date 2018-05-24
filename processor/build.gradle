@@ -1,13 +1,20 @@
 apply plugin: 'java-library'
-apply plugin: 'com.github.dcendents.android-maven'
-group='com.github.cl9'
+apply plugin: 'com.novoda.bintray-release'
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation deps.auto.service
-    implementation deps.javapoet
-    implementation project(path: ':annotations')
+    api project(path: ':annotations')
+    api deps.javapoet
 }
 
 sourceCompatibility = "1.7"
 targetCompatibility = "1.7"
+
+publish {
+    userOrg = deps.userOrg
+    groupId = deps.groupId
+    artifactId = 'inputvalidator-processor'     //compile引用时的第2部分项目名
+    publishVersion = deps.publishVersion
+    desc = deps.desc
+    website = deps.website
+}
